@@ -7,6 +7,17 @@ $("#submit-state").on("click", function(event) {
 // execute(); called in this function to have access to userState
 });
 
+function candidateNameList (){
+    // Doesn't work, need to draw rep names from google civic API
+    for (i=0; i < candidateNameArr.length; i++) {
+        var li = $("<li>");
+        li.text(candidateName);
+        $(".list-group").append(li);
+        $(li).on("click", function() {
+            showNews(candidateName);
+        });
+    }
+}
 //https://newsapi.org/docs/get-started#search
 
 var url = 'http://newsapi.org/v2/everything?' + 
