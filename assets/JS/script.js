@@ -1,3 +1,12 @@
+ // Function to save address to LS and populate representative names on button click
+$("#submit-state").on("click", function(event) {
+    event.preventDefault();
+    let userState = $("#state-input").val();
+    console.log(userState);
+    localStorage.setItem("State", userState);
+// execute(); called in this function to have access to userState
+});
+
 //https://newsapi.org/docs/get-started#search
 
 var url = 'http://newsapi.org/v2/everything?' + 
