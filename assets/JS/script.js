@@ -5,6 +5,7 @@ $("#submit-state").on("click", function(event) {
     console.log(userState);
     localStorage.setItem("State", userState);
 // execute(); called in this function to have access to userState
+//candidateNameList();
 });
 
 function candidateNameList (){
@@ -18,6 +19,15 @@ function candidateNameList (){
         });
     }
 }
+
+// Save representative name returned from gcapi into var to pass through news API to return articles
+let candidateName = "";
+// Function to populate news page portion relative to name clicked
+function showNews(){
+    console.log("you called showNews");
+    $("display-news").text();
+}
+
 //https://newsapi.org/docs/get-started#search
 
 var url = 'http://newsapi.org/v2/everything?' + 
