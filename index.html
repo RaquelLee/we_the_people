@@ -7,9 +7,31 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>We The People</title>
 </head>
-<body>
+<body>    
+    <div class="container">
+        <div class="row">
+            <form class="col s12">
+                <div class="input-field col s12">
+                    <textarea id="state-input" class="materialize-textarea"></textarea>
+                    <label for="textarea1">Enter Your State</label>
+                </div>
+                <button class="btn waves-effect waves-light" type="submit" name="action" id="submit-state">Submit
+                    <i class="material-icons right">send</i>
+                </button>
+        </form>
+        </div>
+        <div class="row">
+            <ul class="collection with-header col s3">
+                <li class="collection-header"><h4>Reps</h4></li>
+                <li class="collection-item"><div>Alvin<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+            </ul>
+            <div class="col s9">
+                <p id="display-news">News displayed here</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="script.js"></script>
+<script src="assets/JS/script.js"></script>
