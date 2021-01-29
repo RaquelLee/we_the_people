@@ -1,4 +1,36 @@
-# group_project_1
+# we_the_people
+
+## Git Branching Instructions 
+here is what you should do in your projects each time you're ready to work on a new feature:
+1. From the main branch, do a git pull to ensure you're working with the most up-to-date files.
+2. git checkout -b <branch-name> to create a new branch to work from.
+3. Code as normal.
+4. When done working for the day, or ready to push your code to be merged, do your normal add and commit. When pushing be sure to push to your branch name with git push origin <branch-name> .
+5. From GitHub, create a Pull Request from the branch you pushed, if you're ready to merge your code with the main branch.
+6. Communicate with your team that you've created a pull request.
+7. Once you know that your code has been merged, delete it locally by first changing to the main branch with git checkout main and then delete the branch that was merged with git branch -d <branch-name>.
+8. Repeat.
+
+## Review Pull Request Instructions 
+* First you will want to test the changes introduced by the new  branch locally.In order to examine the new branch on your local machine, run the following commands in your terminal:
+  ```
+  git fetch
+  ```
+  ```
+  git checkout -b <branch-name> origin/<branch-name>
+  ```
+* This code should bring the copy of the <branch-name> branch that's on GitHub onto your computer. 
+* Normally you'd run the code here to make sure everything works properly.
+* Check back out to your local `main` branch by running the following in your terminal:
+  ```
+  git checkout main
+  ```
+* Now go to your GitHub repo's main page and go to the "Pull request" section. Select the <branch-name> pull request from the list.
+* At the next page select the option to see the "Files changed".
+* You should be presented with all of the files that were changed in this PR.
+* If there are any changes you would like made, you can click the line number to leave a comment the PR author will see and should address before approval. Otherwise click "Review changes" and approve the PR.
+* Click the "Merge pull request" button to add the branch's changes into main. 
+* Remember to use `git pull` on your main branch to update it.
 
 ## Presentation Requirements
 
@@ -33,28 +65,23 @@ What challenges did you encounter? What were your successes?
 | Presentation          | 10%    |
 | Collaboration         | 10%    |
 
-
-## Grading Requirements
-
-This project is graded based on the following criteria:
-
 ### Technical Acceptance Criteria: 25%
 
 * Satisfies the following code requirements:
 
-	* Application uses at least two server-side APIs.
+	~~* Application uses at least two server-side APIs.~~
 
-    * Application uses client-side storage to store persistent data.
+    ~~* Application uses client-side storage to store persistent data.~~
 
     * Application doesn't use JS alerts, prompts, or confirms (uses modals instead).
 
-    * Application uses a CSS framework other than Bootstrap.
+    ~~* Application uses a CSS framework other than Bootstrap.~~
 
-    * Application is interactive (accepts and responds to user input)
+    ~~* Application is interactive (accepts and responds to user input)~~
 
 ### Concept 10%
 
-* Application should be a unique and novel idea.
+~~* Application should be a unique and novel idea.~~
 
 * Your group should clearly and concisely articulate your project idea.
 
@@ -66,14 +93,13 @@ This project is graded based on the following criteria:
 
 * Have a clean repository that meets quality coding standards 
 
-* Repository has a unique name.
+~~* Repository has a unique name.~~
 
 * Repository follows best practices for file structure and naming conventions.
 
 * Repository follows best practices for class/id naming conventions, indentation, quality comments, etc.
 
 * Repository contains multiple descriptive commit messages.
-
 
 ### Application Quality: 15%
 
