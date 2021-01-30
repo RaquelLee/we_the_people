@@ -43,31 +43,19 @@ function showNews(candidateName){
     console.log(candidateName);
     $("display-news").text();
 }
-//https://newsapi.org/docs/get-started#search
-var url = 'https://newsapi.org/v2/everything?' + 
-//everything endpoint is all atricles
-          'q=Apple&' + // Articles published that mention apple
-          // candidateName will go in place of apple 
-          'from=2021-01-26&' + //Article Date
-          'sortBy=popularity&' + //Sort by Popularity 
-            'apiKey=6ccab1e31b024c9da887740634bbcad5';
-var req = new Request(url);  
-// Loop, but need to reference .name not index number
-fetch(req)
-    .then(response => response.json())
-    .then(data => console.log(data));
-    fetch(req)
-    .then(response => response.json())
-    .then(data => console.log(data.articles[0].content));
-    fetch(req)
-    .then(response => response.json())
-    .then(data => console.log(data.articles[0].description));
-    fetch(req)
-    .then(response => response.json())
-    .then(data => console.log(data.articles[0].title));
-    fetch(req)
-    .then(response => response.json())
-    .then(data => console.log(data.articles[0].url));
-    fetch(req)
-    .then(response => response.json())
-    .then(data => console.log(data.articles[0].urlToImage));
+
+const settings = {
+	"async": true,
+	"crossDomain": true,
+	"url": "https://bing-news-search1.p.rapidapi.com/news/search?q=senator&freshness=Day&textFormat=Raw&safeSearch=Off",
+	"method": "GET",
+	"headers": {
+		"x-bingapis-sdk": "true",
+		"x-rapidapi-key": "93b581f319mshef18294199bf478p1b8c69jsndb7ade1dbb94",
+		"x-rapidapi-host": "bing-news-search1.p.rapidapi.com"
+	}
+};
+
+$.ajax(settings).done(function (response) {
+	console.log(response);
+});
