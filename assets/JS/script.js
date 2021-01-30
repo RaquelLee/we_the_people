@@ -16,26 +16,32 @@ $("#submit-state").on("click", function(event) {
 //candidateNameList();
 });
 
-let candidateName = "";
-function candidateNameList (){
-    // Doesn't work, need to draw rep names from google civic API
-    for (i=0; i < candidateNameArr.length; i++) {
-        var li = $("<li>");
-        li.text(candidateName);
-        $(".list-group").append(li);
-        $(li).on("click", function() {
-            showNews(candidateName);
-        });
-    }
-}
+function execute() {
+    return gapi.client.civicinfo.representatives.representativeInfoByAddress({
+    "address": userState
+    })
+        .then(function(response) {
+                console.log(response.result.offices); //2-8
+                for (var i=2; i < 9; i++){
+                    var li = $("<li>");
+                    li.text(response.result.offices[i].name);
+                    $(".reps").append(li);
+                    console.log(li.text());
+                }
 
+                for (var i=2; i < 16; i++){
+                    console.log(response.result.officials[i].name)
+                }
+                console.log("Response", response);
+            },
+            function(err) { console.error("Execute error", err); });
+}
 // Save representative name returned from gcapi into var to pass through news API to return articles
 // Function to populate news page portion relative to name clicked
 function showNews(candidateName){
     console.log(candidateName);
     $("display-news").text();
 }
-
 //https://newsapi.org/docs/get-started#search
 var url = 'http://newsapi.org/v2/everything?' + 
 //everything endpoint is all atricles
@@ -44,21 +50,23 @@ var url = 'http://newsapi.org/v2/everything?' +
           'from=2021-01-26&' + //Article Date
           'sortBy=popularity&' + //Sort by Popularity 
             'apiKey=6ccab1e31b024c9da887740634bbcad5';
-var req = new Request(url);            
+var req = new Request(url);  
+// Loop, but need to reference .name not index number
 fetch(req)
+    .then(response => response.json())
+    .then(data => console.log(data));
+    fetch(req)
     .then(response => response.json())
     .then(data => console.log(data.articles[0].content));
     fetch(req)
     .then(response => response.json())
-    .then(data => console.log(data.articles[1].content));
-
-function execute() {
-    return gapi.client.civicinfo.representatives.representativeInfoByAddress({
-    "address": userState
-    })
-        .then(function(response) {
-                // Handle the results here (response.result has the parsed body).
-                console.log("Response", response);
-            },
-            function(err) { console.error("Execute error", err); });
-}
+    .then(data => console.log(data.articles[0].description));
+    fetch(req)
+    .then(response => response.json())
+    .then(data => console.log(data.articles[0].title));
+    fetch(req)
+    .then(response => response.json())
+    .then(data => console.log(data.articles[0].url));
+    fetch(req)
+    .then(response => response.json())
+    .then(data => console.log(data.articles[0].urlToImage));
