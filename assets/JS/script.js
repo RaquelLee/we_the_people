@@ -1,13 +1,23 @@
- // Function to save address to LS and populate representative names on button click
+function loadClient() {
+    gapi.client.setApiKey("AIzaSyDP33wEIM1qwv7C_7NOQlaWEoaEHVOKFUg");
+    return gapi.client.load("https://civicinfo.googleapis.com/$discovery/rest?version=v2")
+        .then(function() { console.log("GAPI client loaded for API"); },
+            function(err) { console.error("Error loading GAPI client for API", err); });
+}
+gapi.load("client", loadClient);
+
+
+// Function to save address to LS and populate representative names on button click
+let userState = "";
 $("#submit-state").on("click", function(event) {
     event.preventDefault();
-    let userState = $("#state-input").val();
-    console.log(userState);
+    userState = $("#state-input").val();
     localStorage.setItem("State", userState);
-// execute(); called in this function to have access to userState
+    execute(userState);
 //candidateNameList();
 });
 
+let candidateName = "";
 function candidateNameList (){
     // Doesn't work, need to draw rep names from google civic API
     for (i=0; i < candidateNameArr.length; i++) {
@@ -21,15 +31,13 @@ function candidateNameList (){
 }
 
 // Save representative name returned from gcapi into var to pass through news API to return articles
-let candidateName = "";
 // Function to populate news page portion relative to name clicked
-function showNews(){
-    console.log("you called showNews");
+function showNews(candidateName){
+    console.log(candidateName);
     $("display-news").text();
 }
 
 //https://newsapi.org/docs/get-started#search
-
 var url = 'http://newsapi.org/v2/everything?' + 
 //everything endpoint is all atricles
           'q=Apple&' + // Articles published that mention apple
@@ -37,24 +45,10 @@ var url = 'http://newsapi.org/v2/everything?' +
           'from=2021-01-26&' + //Article Date
           'sortBy=popularity&' + //Sort by Popularity 
             'apiKey=6ccab1e31b024c9da887740634bbcad5';
-
 var req = new Request(url);            
 fetch(req)
     .then(response => response.json())
     .then(data => console.log(data.articles[0].content));//display in #display-news
-//https://javascript.info/fetch
-// How to display additional information using fetch?
-// what to display in addition to content 
-
-
-function loadClient() {
-    gapi.client.setApiKey("AIzaSyDP33wEIM1qwv7C_7NOQlaWEoaEHVOKFUg");
-    return gapi.client.load("https://civicinfo.googleapis.com/$discovery/rest?version=v2")
-        .then(function() { console.log("GAPI client loaded for API"); },
-            function(err) { console.error("Error loading GAPI client for API", err); });
-}
-
-// Make sure the client is loaded before calling this method.
 
 function execute() {
     return gapi.client.civicinfo.representatives.representativeInfoByAddress({
@@ -66,11 +60,3 @@ function execute() {
             },
             function(err) { console.error("Execute error", err); });
 }
-
-//ERROR gapi not defined -> resources below
-
-//https://developers.google.com/explorer-help/guides/code_samples#javascript
-//https://github.com/google/google-api-javascript-client#loading-an-api-and-making-a-request
-//https://github.com/google/google-api-javascript-client/blob/master/docs/samples.md
-
-gapi.load("client", loadClient);
