@@ -6,7 +6,6 @@ function loadClient() {
 }
 gapi.load("client", loadClient);
 
-
 // Function to save address to LS and populate representative names on button click
 let userState = "";
 $("#submit-state").on("click", function(event) {
@@ -48,7 +47,10 @@ var url = 'http://newsapi.org/v2/everything?' +
 var req = new Request(url);            
 fetch(req)
     .then(response => response.json())
-    .then(data => console.log(data.articles[0].content));//display in #display-news
+    .then(data => console.log(data.articles[0].content));
+    fetch(req)
+    .then(response => response.json())
+    .then(data => console.log(data.articles[1].content));
 
 function execute() {
     return gapi.client.civicinfo.representatives.representativeInfoByAddress({
