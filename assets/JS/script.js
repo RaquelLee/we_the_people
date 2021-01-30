@@ -21,18 +21,19 @@ function execute() {
     "address": userState
     })
         .then(function(response) {
-                console.log(response.result.offices); //2-8
-                for (var i=2; i < 9; i++){
-                    var li = $("<li>");
-                    li.text(response.result.offices[i].name);
-                    $(".reps").append(li);
-                    console.log(li.text());
-                }
-
-                for (var i=2; i < 16; i++){
-                    console.log(response.result.officials[i].name)
-                }
-                console.log("Response", response);
+            console.log("Response", response);
+            for (var i = 2; i < 9; i++ ) {
+                var repName = response.result.officials[i].name
+                var li = $("<li>");
+                li.addClass("names")
+                li.attr("data-rep", repName)
+                li.text(repName);
+                $(".reps").append(li);
+                console.log(response.result.officials[i].name)
+            }
+            $(".names").on("click", function(){
+                console.log($(this).attr("data-rep"));
+            }) 
             },
             function(err) { console.error("Execute error", err); });
 }
@@ -43,7 +44,7 @@ function showNews(candidateName){
     $("display-news").text();
 }
 //https://newsapi.org/docs/get-started#search
-var url = 'http://newsapi.org/v2/everything?' + 
+var url = 'https://newsapi.org/v2/everything?' + 
 //everything endpoint is all atricles
           'q=Apple&' + // Articles published that mention apple
           // candidateName will go in place of apple 
