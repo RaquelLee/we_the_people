@@ -62,7 +62,7 @@ function execute() {
                         );
                         $(".display-news").append(newP);
                         //clear when new name clicked 
-                    }
+                    };
                 });
             });
             },
