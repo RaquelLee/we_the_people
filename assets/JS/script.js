@@ -44,7 +44,25 @@ function execute() {
                     }
                 };
                 $.ajax(settings).done(function (response) {
-                    console.log(response)
+                    //returns 10 articles at a time
+                    //cleared when new name selected 
+                    for (var j=0; j < 11; j++){
+                        var newP = $("<p>");
+                        var newImg = $("<img>)");
+                        newImg.attr("src","");
+                        //set to image thumbnail URL
+                        newP.text(
+                        response.value[j].name +
+                        // if value is undefined, ...
+                        response.value[j].description +
+                        // if value is undefined, ...
+                        response.value[j].image.thumbnail.contentUrl +
+                        // if value is undefined, ...
+                        response.value[j].url                        // if value is undefined, ...
+                        );
+                        $(".display-news").append(newP);
+                        //clear when new name clicked 
+                    }
                 });
             });
             },
