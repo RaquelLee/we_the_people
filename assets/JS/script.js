@@ -6,14 +6,12 @@ function loadClient() {
 }
 gapi.load("client", loadClient);
 
-// Function to save address to LS and populate representative names on button click
 let userState = "";
 $("#submit-state").on("click", function(event) {
     event.preventDefault();
     userState = $("#state-input").val();
     localStorage.setItem("State", userState);
     execute(userState);
-//candidateNameList();
 });
 
 function execute() {
@@ -21,41 +19,65 @@ function execute() {
     "address": userState
     })
         .then(function(response) {
-            console.log("Response", response);
             for (var i = 2; i < 9; i++ ) {
-                var repName = response.result.officials[i].name
+                let repName = response.result.officials[i].name;
                 var li = $("<li>");
-                li.addClass("names")
-                li.attr("data-rep", repName)
+                li.addClass("names");
+                li.attr("data-rep", repName);
                 li.text(repName);
                 $(".reps").append(li);
-                console.log(response.result.officials[i].name)
-            }
+                //cleared when new state selected
+            };
             $(".names").on("click", function(){
-                console.log($(this).attr("data-rep"));
-            }) 
+                let currentRep = $(this).attr("data-rep")
+                const settings = {
+                    "async": true,
+                    "crossDomain": true,
+                    "url": "https://bing-news-search1.p.rapidapi.com/news/search?q="
+                    + currentRep +
+                    "&freshness=Day&textFormat=Raw&safeSearch=Off",
+                    "method": "GET",
+                    "headers": {
+                        "x-bingapis-sdk": "true",
+                        "x-rapidapi-key": "93b581f319mshef18294199bf478p1b8c69jsndb7ade1dbb94",
+                        "x-rapidapi-host": "bing-news-search1.p.rapidapi.com"
+                    }
+                };
+                $.ajax(settings).done(function (response) {
+                    //returns 10 articles at a time
+                    //cleared when new name selected 
+                    for (var j=0; j < 11; j++){
+                        var newP = $("<p>");
+                        var newImg = $("<img>)");
+                        newImg.attr("src","");
+                        //set to image thumbnail URL
+                        newP.text(
+                        response.value[j].name +
+                        // if value is undefined, ...
+                        response.value[j].description +
+                        // if value is undefined, ...
+                        response.value[j].image.thumbnail.contentUrl +
+                        // if value is undefined, ...
+                        response.value[j].url                        // if value is undefined, ...
+                        );
+                        $(".display-news").append(newP);
+                        //clear when new name clicked 
+                    };
+                });
+            });
             },
             function(err) { console.error("Execute error", err); });
-}
-// Save representative name returned from gcapi into var to pass through news API to return articles
-// Function to populate news page portion relative to name clicked
-function showNews(candidateName){
-    console.log(candidateName);
-    $("display-news").text();
-}
-
-const settings = {
-	"async": true,
-	"crossDomain": true,
-	"url": "https://bing-news-search1.p.rapidapi.com/news/search?q=senator&freshness=Day&textFormat=Raw&safeSearch=Off",
-	"method": "GET",
-	"headers": {
-		"x-bingapis-sdk": "true",
-		"x-rapidapi-key": "93b581f319mshef18294199bf478p1b8c69jsndb7ade1dbb94",
-		"x-rapidapi-host": "bing-news-search1.p.rapidapi.com"
-	}
 };
 
-$.ajax(settings).done(function (response) {
-	console.log(response);
-});
+function pageLoad() {
+    // upon page load user is presented with search, dropdown etc to choose what rep names get displayed, page transitions to list of rep names
+};
+
+function stateRepsSelected() {
+    //list gets populated with rep names for user to choose from
+    //user can select another state from any page and representatives and news get cleared and repopulated 
+};
+
+function repSelectedNews() {
+    //news gets populated and cleared relative to name selected
+};
