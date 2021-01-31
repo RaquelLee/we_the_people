@@ -68,3 +68,16 @@ function execute() {
             },
             function(err) { console.error("Execute error", err); });
 };
+
+function pageLoad() {
+    // upon page load user is presented with search, dropdown etc to choose what rep names get displayed, page transitions to list of rep names
+};
+
+function stateRepsSelected() {
+    //list gets populated with rep names for user to choose from
+    //user can select another state from any page and representatives and news get cleared and repopulated 
+};
+
+function repSelectedNews() {
+    //news gets populated and cleared relative to name selected
+};
