@@ -11,6 +11,7 @@ $("#submit-state").on("click", function(event) {
     event.preventDefault();
     userState = $("#state-input").val();
     localStorage.setItem("State", userState);
+    $(".names").empty();
     execute(userState);
 });
 
