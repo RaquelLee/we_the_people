@@ -21,7 +21,8 @@ function execute() {
         "address": userState
     })
         .then(function (response) {
-            for (var i = 2; i < 9; i++) {
+            console.log(response)
+            for (var i = 2; i < response.result.officials.length; i++) {
                 let repName = response.result.officials[i].name;
                 var li = $("<li>");
                 li.addClass("names");
@@ -50,7 +51,10 @@ function execute() {
                     //returns 10 articles at a time
                     //cleared when new name selected 
                     console.log(response);
-                    for (var j = 0; j < 11; j++) {
+                     if (response.value.length <= 0) {
+                        alert("no articles");
+                    }
+                    for (var j = 0; j < response.value.length; j++) {
                         var newP = $("<p>");
                         newP.addClass("newsInfo");
                         ;
@@ -67,7 +71,7 @@ function execute() {
                             newP.append(response.value[j].description);
                             // newP.append(newImg);
                             newP.append(response.value[j].url);
-                        }
+                        } 
 
                         // newP.text(
                         //     response.value[j].name +
