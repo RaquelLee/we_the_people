@@ -12,6 +12,7 @@ $("#submit-state").on("click", function (event) {
     userState = $("#state-input").val();
     localStorage.setItem("State", userState);
     $(".names").empty();
+    $(".newsInfo").empty();
     execute(userState);
 });
 
@@ -51,6 +52,7 @@ function execute() {
                     console.log(response);
                     for (var j = 0; j < 11; j++) {
                         var newP = $("<p>");
+                        newP.addClass("newsInfo");
                         ;
                         //set to image thumbnail URL
                         if (response.value[j] && response.value[j].image) {
@@ -60,7 +62,7 @@ function execute() {
                             newP.append(newImg);
                             newP.append(response.value[j].description);
                             newP.append(response.value[j].url);
-                        } else if (response.value[j]){
+                        } else if (response.value[j]) {
                             newP.append(response.value[j].name);
                             newP.append(response.value[j].description);
                             // newP.append(newImg);
