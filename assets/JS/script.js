@@ -1,13 +1,13 @@
 function loadClient() {
     gapi.client.setApiKey("AIzaSyDP33wEIM1qwv7C_7NOQlaWEoaEHVOKFUg");
     return gapi.client.load("https://civicinfo.googleapis.com/$discovery/rest?version=v2")
-        .then(function() { console.log("GAPI client loaded for API"); },
-            function(err) { console.error("Error loading GAPI client for API", err); });
+        .then(function () { console.log("GAPI client loaded for API"); },
+            function (err) { console.error("Error loading GAPI client for API", err); });
 }
 gapi.load("client", loadClient);
 
 let userState = "";
-$("#submit-state").on("click", function(event) {
+$("#submit-state").on("click", function (event) {
     event.preventDefault();
     userState = $("#state-input").val();
     localStorage.setItem("State", userState);
@@ -17,10 +17,10 @@ $("#submit-state").on("click", function(event) {
 
 function execute() {
     return gapi.client.civicinfo.representatives.representativeInfoByAddress({
-    "address": userState
+        "address": userState
     })
-        .then(function(response) {
-            for (var i = 2; i < 9; i++ ) {
+        .then(function (response) {
+            for (var i = 2; i < 9; i++) {
                 let repName = response.result.officials[i].name;
                 var li = $("<li>");
                 li.addClass("names");
@@ -29,14 +29,15 @@ function execute() {
                 $(".reps").append(li);
                 //cleared when new state selected
             };
-            $(".names").on("click", function(){
+            $(".names").on("click", function () {
+                $(".display-news").empty();
                 let currentRep = $(this).attr("data-rep")
                 const settings = {
                     "async": true,
                     "crossDomain": true,
                     "url": "https://bing-news-search1.p.rapidapi.com/news/search?q="
-                    + currentRep +
-                    "&freshness=Day&textFormat=Raw&safeSearch=Off",
+                        + currentRep +
+                        "&freshness=Day&textFormat=Raw&safeSearch=Off",
                     "method": "GET",
                     "headers": {
                         "x-bingapis-sdk": "true",
@@ -47,27 +48,41 @@ function execute() {
                 $.ajax(settings).done(function (response) {
                     //returns 10 articles at a time
                     //cleared when new name selected 
-                    for (var j=0; j < 11; j++){
+                    console.log(response);
+                    for (var j = 0; j < 11; j++) {
                         var newP = $("<p>");
-                        var newImg = $("<img>)");
-                        newImg.attr("src","");
+                        ;
                         //set to image thumbnail URL
-                        newP.text(
-                        response.value[j].name +
-                        // if value is undefined, ...
-                        response.value[j].description +
-                        // if value is undefined, ...
-                        response.value[j].image.thumbnail.contentUrl +
-                        // if value is undefined, ...
-                        response.value[j].url                        // if value is undefined, ...
-                        );
+                        if (response.value[j] && response.value[j].image) {
+                            var newImg = $("<img>)");
+                            newImg.attr("src", response.value[j].image.thumbnail.contentUrl);
+                            newP.append(response.value[j].name);
+                            newP.append(newImg);
+                            newP.append(response.value[j].description);
+                            newP.append(response.value[j].url);
+                        } else if (response.value[j]){
+                            newP.append(response.value[j].name);
+                            newP.append(response.value[j].description);
+                            // newP.append(newImg);
+                            newP.append(response.value[j].url);
+                        }
+
+                        // newP.text(
+                        //     response.value[j].name +
+                        //     // if value is undefined, ...
+                        //     response.value[j].description +
+                        //     // if value is undefined, ...
+                        //     response.value[j].image.thumbnail.contentUrl +
+                        //     // if value is undefined, ...
+                        //     response.value[j].url                        // if value is undefined, ...
+                        // );
                         $(".display-news").append(newP);
                         //clear when new name clicked 
                     };
                 });
             });
-            },
-            function(err) { console.error("Execute error", err); });
+        },
+            function (err) { console.error("Execute error", err); });
 };
 
 function pageLoad() {
