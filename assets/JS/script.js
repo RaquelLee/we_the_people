@@ -59,6 +59,7 @@ function execute() {
                 };
                 $.ajax(settings).done(function (response) {
                     if (response.value.length <= 0) {
+                        // this is where the bernie modal is opened and closed
                         $(".mod").addClass("active");
                         $("#overlay").addClass("active");
                         $(".close-button").on("click", function(){

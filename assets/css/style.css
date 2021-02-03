@@ -38,7 +38,7 @@
     min-height: 100%;
     opacity: 0.3;
 }
-/* entire modal section */
+/* entire modal section in it's original state, not displayed */
 .mod {
     position: fixed !important; 
     top: 50% !important;
@@ -52,6 +52,7 @@
     width: 400px !important;
     max-width: 60% !important;
 }
+/* Modal displayed */
 .mod.active {
     transform: translate(-50%, -50%) scale(1);
 }
@@ -78,6 +79,7 @@
     font-weight: bold;
     text-align: center;
 }
+/* close button (X) in modal */
 .modal-header .close-button {
     cursor: pointer;
     border: none;
@@ -86,6 +88,7 @@
     font-size: 2rem;
     font-weight: bold;
 }
+/* Original state of overlay, not displayed */
 #overlay {
     position: fixed;
     opacity: 0;
@@ -97,7 +100,13 @@
     background-color: rgba(0, 0, 0, .5);
     pointer-events: none;
 }
+/* Displayed overlay of modal */
 #overlay.active {
     opacity: 1;
     pointer-events: all;
+}
+/* list color */
+.collection-header {
+    background-color: transparent !important;
+    opacity: 1 !important;
 }
