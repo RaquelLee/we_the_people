@@ -21,7 +21,6 @@ function execute() {
         "address": userState
     })
         .then(function (response) {
-            console.log(response)
             for (var i = 2; i < response.result.officials.length; i++) {
                 let repName = response.result.officials[i].name;
                 var li = $("<li>");
@@ -29,7 +28,6 @@ function execute() {
                 li.attr("data-rep", repName);
                 li.text(repName);
                 $(".reps").append(li);
-                //cleared when new state selected
             };
             $(".names").on("click", function () {
                 $(".display-news").empty();
@@ -48,19 +46,14 @@ function execute() {
                     }
                 };
                 $.ajax(settings).done(function (response) {
-                    //returns 10 articles at a time
-                    //cleared when new name selected 
-                    console.log(response);
-                     if (response.value.length <= 0) {
+                    if (response.value.length <= 0) {
                         alert("no articles");
                     }
                     for (var j = 0; j < response.value.length; j++) {
                         var newP = $("<p>");
                         newP.addClass("newsInfo");
-                        ;
-                        //set to image thumbnail URL
                         if (response.value[j] && response.value[j].image) {
-                            var newImg = $("<img>)");
+                            var newImg = $("<img>");
                             newImg.attr("src", response.value[j].image.thumbnail.contentUrl);
                             newP.append(response.value[j].name);
                             newP.append(newImg);
@@ -69,37 +62,12 @@ function execute() {
                         } else if (response.value[j]) {
                             newP.append(response.value[j].name);
                             newP.append(response.value[j].description);
-                            // newP.append(newImg);
                             newP.append(response.value[j].url);
                         } 
-
-                        // newP.text(
-                        //     response.value[j].name +
-                        //     // if value is undefined, ...
-                        //     response.value[j].description +
-                        //     // if value is undefined, ...
-                        //     response.value[j].image.thumbnail.contentUrl +
-                        //     // if value is undefined, ...
-                        //     response.value[j].url                        // if value is undefined, ...
-                        // );
                         $(".display-news").append(newP);
-                        //clear when new name clicked 
                     };
                 });
             });
         },
             function (err) { console.error("Execute error", err); });
-};
-
-function pageLoad() {
-    // upon page load user is presented with search, dropdown etc to choose what rep names get displayed, page transitions to list of rep names
-};
-
-function stateRepsSelected() {
-    //list gets populated with rep names for user to choose from
-    //user can select another state from any page and representatives and news get cleared and repopulated 
-};
-
-function repSelectedNews() {
-    //news gets populated and cleared relative to name selected
 };
