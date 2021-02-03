@@ -1,0 +1,30 @@
+.cursive {
+    font-family: 'Pinyon Script', cursive;
+}
+
+.front-page {
+    font-size: 180px;
+}
+.scroll-box {
+    overflow-y: scroll;
+    height: 200px;
+}
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #ffffff;
+}       
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(255, 255, 255);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(0, 0, 0);
+}

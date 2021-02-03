@@ -1,3 +1,5 @@
+$(".collection").addClass("hide");//
+
 function loadClient() {
     gapi.client.setApiKey("AIzaSyDP33wEIM1qwv7C_7NOQlaWEoaEHVOKFUg");
     return gapi.client.load("https://civicinfo.googleapis.com/$discovery/rest?version=v2")
@@ -11,8 +13,12 @@ $("#submit-state").on("click", function (event) {
     event.preventDefault();
     userState = $("#state-input").val();
     localStorage.setItem("State", userState);
-    $(".names").empty();
-    $(".newsInfo").empty();
+    execute(userState);
+});
+
+$("#history-state").on("click", function (event) {
+    event.preventDefault();
+    userState = localStorage.getItem("State");
     execute(userState);
 });
 
@@ -21,15 +27,19 @@ function execute() {
         "address": userState
     })
         .then(function (response) {
-            console.log(response)
+            $(".names").empty();
+            $(".newsInfo").empty();        
+            $("#history-state").addClass("hide");
+            $(".about").addClass("hide");
+            $(".cursive").removeClass("front-page");
+            $(".collection").removeClass("hide");
             for (var i = 2; i < response.result.officials.length; i++) {
                 let repName = response.result.officials[i].name;
                 var li = $("<li>");
-                li.addClass("names");
+                li.addClass("names");//adding collection-item for active links causes error
                 li.attr("data-rep", repName);
                 li.text(repName);
                 $(".reps").append(li);
-                //cleared when new state selected
             };
             $(".names").on("click", function () {
                 $(".display-news").empty();
@@ -48,58 +58,91 @@ function execute() {
                     }
                 };
                 $.ajax(settings).done(function (response) {
-                    //returns 10 articles at a time
-                    //cleared when new name selected 
-                    console.log(response);
-                     if (response.value.length <= 0) {
+                    if (response.value.length <= 0) {
                         alert("no articles");
                     }
                     for (var j = 0; j < response.value.length; j++) {
                         var newP = $("<p>");
                         newP.addClass("newsInfo");
-                        ;
-                        //set to image thumbnail URL
                         if (response.value[j] && response.value[j].image) {
-                            var newImg = $("<img>)");
-                            newImg.attr("src", response.value[j].image.thumbnail.contentUrl);
-                            newP.append(response.value[j].name);
-                            newP.append(newImg);
-                            newP.append(response.value[j].description);
-                            newP.append(response.value[j].url);
-                        } else if (response.value[j]) {
-                            newP.append(response.value[j].name);
-                            newP.append(response.value[j].description);
-                            // newP.append(newImg);
-                            newP.append(response.value[j].url);
-                        } 
+                            var colDiv = $("<div>");
+                            colDiv.addClass("col s6")
+                            $(".display-news").append(colDiv);
 
-                        // newP.text(
-                        //     response.value[j].name +
-                        //     // if value is undefined, ...
-                        //     response.value[j].description +
-                        //     // if value is undefined, ...
-                        //     response.value[j].image.thumbnail.contentUrl +
-                        //     // if value is undefined, ...
-                        //     response.value[j].url                        // if value is undefined, ...
-                        // );
-                        $(".display-news").append(newP);
-                        //clear when new name clicked 
-                    };
-                });
+                            var cardDiv = $("<div>");
+                            cardDiv.addClass("card card-panel hoverable large");
+                            $(colDiv).append(cardDiv);
+
+                            var newImg = $("<img>");
+                            newImg.addClass("circle responsive-img");
+
+                            newImg.attr("src", response.value[j].image.thumbnail.contentUrl);
+                            cardDiv.append(newImg);
+
+                            var newSpan = $("<span>");
+                            newSpan.addClass("card-title");
+                            if (response.value[j].name.length > 112){
+                                response.value[j].name = response.value[j].name.substring(0, 111) + "...";
+                            };
+                            newSpan.text(response.value[j].name);
+                            cardDiv.append(newSpan); 
+
+                            var newA = $("<a>"); 
+                            newA.addClass("btn-floating waves-effect waves-light halfway-fab black");
+                            newA.attr("href", response.value[j].url);
+                            var i = $("<i>");
+                            i.addClass("material-icons");
+                            i.text("open_in_new");
+                            newA.append(i);
+                            cardDiv.prepend(newA);
+
+                            var cardContentDiv = $("<div>");
+                            cardContentDiv.addClass("card-content");
+                            cardDiv.append(cardContentDiv);
+
+                            var newP = $("<p>");
+                            newP.addClass("newsInfo scroll-box");
+                            newP.text(response.value[j].description);
+                            cardContentDiv.append(newP); 
+                        };
+                        // SHOW ARTICLES WITH NO IMAGE?
+                        // } else if (response.value[j]) {
+                        //     var colDiv = $("<div>");
+                        //     colDiv.addClass("col s6 ")
+                        //     $(".display-news").append(colDiv);
+
+                        //     var cardDiv = $("<div>");
+                        //     cardDiv.addClass("card card-panel hoverable large");
+                        //     $(colDiv).append(cardDiv);
+
+                        //     var newSpan = $("<span>");
+                        //     newSpan.addClass("card-title");
+                        //     if (response.value[j].name.length > 112){
+                        //         response.value[j].name = response.value[j].name.substring(0, 111) + "...";
+                        //     };
+                        //     newSpan.text(response.value[j].name);
+                        //     cardDiv.append(newSpan); 
+
+                        //     var newA = $("<a>"); 
+                        //     newA.addClass("btn-floating waves-effect waves-light halfway-fab grey");
+                        //     newA.attr("href", response.value[j].url);
+                        //     var i = $("<i>");
+                        //     i.addClass("material-icons tiny");
+                        //     i.text("open_in_new");
+                        //     newA.append(i);
+                        //     cardDiv.prepend(newA);
+
+                        //     var cardContentDiv = $("<div>");
+                        //     cardContentDiv.addClass("card-content scroll-box");
+                        //     cardDiv.append(cardContentDiv);
+
+                        //     var newP = $("<p>");
+                        //     newP.addClass("newsInfo scroll-box");
+                        //     newP.text(response.value[j].description);
+                        //     cardContentDiv.append(newP);
+                        // };
+                    }});
             });
         },
             function (err) { console.error("Execute error", err); });
-};
-
-function pageLoad() {
-    // upon page load user is presented with search, dropdown etc to choose what rep names get displayed, page transitions to list of rep names
-};
-
-function stateRepsSelected() {
-    //list gets populated with rep names for user to choose from
-    //user can select another state from any page and representatives and news get cleared and repopulated 
-};
-
-function repSelectedNews() {
-    //news gets populated and cleared relative to name selected
 };
