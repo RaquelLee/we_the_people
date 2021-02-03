@@ -28,7 +28,7 @@ function execute() {
             for (var i = 2; i < response.result.officials.length; i++) {
                 let repName = response.result.officials[i].name;
                 var li = $("<li>");
-                li.addClass("names");
+                li.addClass("names");//adding collection-item for active links causes error
                 li.attr("data-rep", repName);
                 li.text(repName);
                 $(".reps").append(li);
@@ -57,20 +57,83 @@ function execute() {
                         var newP = $("<p>");
                         newP.addClass("newsInfo");
                         if (response.value[j] && response.value[j].image) {
+                            var colDiv = $("<div>");
+                            colDiv.addClass("col s6 ")
+                            $(".display-news").append(colDiv);
+
+                            var cardDiv = $("<div>");
+                            cardDiv.addClass("card card-panel hoverable large");
+                            $(colDiv).append(cardDiv);
+
                             var newImg = $("<img>");
+                            newImg.addClass("circle responsive-img imgBtn");
+
                             newImg.attr("src", response.value[j].image.thumbnail.contentUrl);
-                            newP.append(response.value[j].name);
-                            newP.append(newImg);
-                            newP.append(response.value[j].description);
-                            newP.append(response.value[j].url);
-                        } else if (response.value[j]) {
-                            newP.append(response.value[j].name);
-                            newP.append(response.value[j].description);
-                            newP.append(response.value[j].url);
-                        } 
-                        $(".display-news").append(newP);
-                    };
-                });
+                            cardDiv.append(newImg);
+
+                            var newSpan = $("<span>");
+                            newSpan.addClass("card-title");
+                            if (response.value[j].name.length > 112){
+                                response.value[j].name = response.value[j].name.substring(0, 111) + "...";
+                            };
+                            newSpan.text(response.value[j].name);
+                            cardDiv.append(newSpan); 
+
+                            var newA = $("<a>"); 
+                            newA.addClass("btn-floating waves-effect waves-light halfway-fab grey");
+                            newA.attr("href", response.value[j].url);
+                            var i = $("<i>");
+                            i.addClass("material-icons tiny");
+                            i.text("open_in_new");
+                            newA.append(i);
+                            cardDiv.prepend(newA);
+
+                            var cardContentDiv = $("<div>");
+                            cardContentDiv.addClass("card-content scroll-box");
+                            cardDiv.append(cardContentDiv);
+
+                            var newP = $("<p>");
+                            newP.addClass("newsInfo scroll-box");
+                            newP.text(response.value[j].description);
+                            cardContentDiv.append(newP); 
+                        };
+                        // SHOW ARTICLES WITH NO IMAGE?
+                        // } else if (response.value[j]) {
+                        //     var colDiv = $("<div>");
+                        //     colDiv.addClass("col s6 ")
+                        //     $(".display-news").append(colDiv);
+
+                        //     var cardDiv = $("<div>");
+                        //     cardDiv.addClass("card card-panel hoverable large");
+                        //     $(colDiv).append(cardDiv);
+
+                        //     var newSpan = $("<span>");
+                        //     newSpan.addClass("card-title");
+                        //     if (response.value[j].name.length > 112){
+                        //         response.value[j].name = response.value[j].name.substring(0, 111) + "...";
+                        //     };
+                        //     newSpan.text(response.value[j].name);
+                        //     cardDiv.append(newSpan); 
+
+                        //     var newA = $("<a>"); 
+                        //     newA.addClass("btn-floating waves-effect waves-light halfway-fab grey");
+                        //     newA.attr("href", response.value[j].url);
+                        //     var i = $("<i>");
+                        //     i.addClass("material-icons tiny");
+                        //     i.text("open_in_new");
+                        //     newA.append(i);
+                        //     cardDiv.prepend(newA);
+
+                        //     var cardContentDiv = $("<div>");
+                        //     cardContentDiv.addClass("card-content scroll-box");
+                        //     cardDiv.append(cardContentDiv);
+
+                        //     var newP = $("<p>");
+                        //     newP.addClass("newsInfo scroll-box");
+                        //     newP.text(response.value[j].description);
+                        //     cardContentDiv.append(newP);
+                        // };
+                    }});
             });
         },
             function (err) { console.error("Execute error", err); });
