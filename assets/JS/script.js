@@ -89,11 +89,11 @@ function execute() {
                             cardDiv.prepend(newA);
 
                             var cardContentDiv = $("<div>");
-                            cardContentDiv.addClass("card-content scroll-box");
+                            cardContentDiv.addClass("card-content");
                             cardDiv.append(cardContentDiv);
 
                             var newP = $("<p>");
-                            newP.addClass("newsInfo");
+                            newP.addClass("newsInfo scroll-box");
                             newP.text(response.value[j].description);
                             cardContentDiv.append(newP); 
                         };
