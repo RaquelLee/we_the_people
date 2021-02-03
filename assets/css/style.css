@@ -38,6 +38,73 @@
     min-height: 100%;
     opacity: 0.3;
 }
+/* entire modal section in it's original state, not displayed */
+.mod {
+    position: fixed !important; 
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) scale(0);
+    transition: 200ms ease-in-out;
+    border: 1px solid black !important;
+    border-radius: 10px !important;
+    z-index: 4 !important;
+    background-color: lightgrey !important;
+    width: 400px !important;
+    max-width: 60% !important;
+}
+/* Modal displayed */
+.mod.active {
+    transform: translate(-50%, -50%) scale(1);
+}
+/* modal header */
+.modal-header {
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    border-bottom: 1px solid black;
+}
+#bernie {
+    margin-left: 35%;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+.about {
+    text-align: center;
+    margin-left: 200px;
+}
+.modal-header .title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-align: center;
+}
+/* close button (X) in modal */
+.modal-header .close-button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 2rem;
+    font-weight: bold;
+}
+/* Original state of overlay, not displayed */
+#overlay {
+    position: fixed;
+    opacity: 0;
+    transition: 200ms ease-in-out;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .5);
+    pointer-events: none;
+}
+/* Displayed overlay of modal */
+#overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
 /* list color */
 .collection-header {
     background-color: transparent !important;
