@@ -59,7 +59,16 @@ function execute() {
                 };
                 $.ajax(settings).done(function (response) {
                     if (response.value.length <= 0) {
-                        alert("no articles");
+                        $(".mod").addClass("active");
+                        $("#overlay").addClass("active");
+                        $(".close-button").on("click", function(){
+                            $(".mod").removeClass("active");
+                            $("#overlay").removeClass("active");
+                        })
+                        $(document).on("click", function(){
+                            $(".mod").removeClass("active");
+                            $("#overlay").removeClass("active");
+                        })
                     }
                     for (var j = 0; j < response.value.length; j++) {
                         var newP = $("<p>");
