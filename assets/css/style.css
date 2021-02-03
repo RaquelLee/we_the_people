@@ -38,3 +38,8 @@
     min-height: 100%;
     opacity: 0.3;
 }
+/* list color */
+.collection-header {
+    background-color: transparent !important;
+    opacity: 1 !important;
+}
