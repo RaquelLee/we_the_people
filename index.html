@@ -12,26 +12,29 @@
 </head>
 <body>    
     <div class="container">
-        <div class="row">
+        <div class="row center">
             <div class="col s12">
             <h1 class="cursive front-page">We The People</h1>
+        <!-- Lame, please change site about -->
+            <h4 class="about">Learn more about your local representatives with recent news</h4>
             </div>
         </div>
         <div class="row">
             <form class="col s12">
-                <div class="input-field col s12">
+                <div class="input-field">
                     <textarea id="state-input" class="materialize-textarea"></textarea>
-                    <label for="textarea1">Enter Your State</label>
-                    <button class="btn waves-effect waves-light black" type="submit" name="action" id="submit-state">
-                        <i class="material-icons">search</i>
+                    <label for="textarea1">Enter Address, City, State, or Zip</label>
+                    <button class="btn waves-effect waves-light black" type="submit" name="action" id="submit-state">View LOCAL Representatives
                     </button>
-    
+                    <button class="btn waves-effect waves-light grey darken-4" type="submit" name="action" id="history-state">
+                        <i class="material-icons">history</i>
+                    </button>
                 </div>
         </form>
         </div>
         <div class="row">
-            <ul class="collection with-header col s3">
-                <li class="collection-header reps"><h4>Reps</h4></li>
+            <ul class="collection with-header col s3 z-depth-1">
+                <li class="collection-header reps"><h4 class="cursive">Representatives</h4></li>
             </ul>
             <div class="col s9 display-news">
             </div>

@@ -11,12 +11,14 @@ gapi.load("client", loadClient);
 let userState = "";
 $("#submit-state").on("click", function (event) {
     event.preventDefault();
-    $(".cursive").removeClass("front-page");
-    $(".collection").removeClass("hide");
     userState = $("#state-input").val();
     localStorage.setItem("State", userState);
-    $(".names").empty();
-    $(".newsInfo").empty();
+    execute(userState);
+});
+
+$("#history-state").on("click", function (event) {
+    event.preventDefault();
+    userState = localStorage.getItem("State");
     execute(userState);
 });
 
@@ -25,6 +27,12 @@ function execute() {
         "address": userState
     })
         .then(function (response) {
+            $(".names").empty();
+            $(".newsInfo").empty();        
+            $("#history-state").addClass("hide");
+            $(".about").addClass("hide");
+            $(".cursive").removeClass("front-page");
+            $(".collection").removeClass("hide");
             for (var i = 2; i < response.result.officials.length; i++) {
                 let repName = response.result.officials[i].name;
                 var li = $("<li>");
