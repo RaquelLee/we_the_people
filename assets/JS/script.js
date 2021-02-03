@@ -58,7 +58,7 @@ function execute() {
                         newP.addClass("newsInfo");
                         if (response.value[j] && response.value[j].image) {
                             var colDiv = $("<div>");
-                            colDiv.addClass("col s6 ")
+                            colDiv.addClass("col s6")
                             $(".display-news").append(colDiv);
 
                             var cardDiv = $("<div>");
@@ -66,7 +66,7 @@ function execute() {
                             $(colDiv).append(cardDiv);
 
                             var newImg = $("<img>");
-                            newImg.addClass("circle responsive-img imgBtn");
+                            newImg.addClass("circle responsive-img");
 
                             newImg.attr("src", response.value[j].image.thumbnail.contentUrl);
                             cardDiv.append(newImg);
@@ -80,10 +80,10 @@ function execute() {
                             cardDiv.append(newSpan); 
 
                             var newA = $("<a>"); 
-                            newA.addClass("btn-floating waves-effect waves-light halfway-fab grey");
+                            newA.addClass("btn-floating waves-effect waves-light halfway-fab black");
                             newA.attr("href", response.value[j].url);
                             var i = $("<i>");
-                            i.addClass("material-icons tiny");
+                            i.addClass("material-icons");
                             i.text("open_in_new");
                             newA.append(i);
                             cardDiv.prepend(newA);
@@ -93,7 +93,7 @@ function execute() {
                             cardDiv.append(cardContentDiv);
 
                             var newP = $("<p>");
-                            newP.addClass("newsInfo scroll-box");
+                            newP.addClass("newsInfo");
                             newP.text(response.value[j].description);
                             cardContentDiv.append(newP); 
                         };
