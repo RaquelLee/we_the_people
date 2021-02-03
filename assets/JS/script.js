@@ -1,3 +1,5 @@
+$(".collection").addClass("hide");//
+
 function loadClient() {
     gapi.client.setApiKey("AIzaSyDP33wEIM1qwv7C_7NOQlaWEoaEHVOKFUg");
     return gapi.client.load("https://civicinfo.googleapis.com/$discovery/rest?version=v2")
