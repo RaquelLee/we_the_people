@@ -11,6 +11,8 @@ gapi.load("client", loadClient);
 let userState = "";
 $("#submit-state").on("click", function (event) {
     event.preventDefault();
+    $(".cursive").removeClass("front-page");
+    $(".collection").removeClass("hide");
     userState = $("#state-input").val();
     localStorage.setItem("State", userState);
     $(".names").empty();
