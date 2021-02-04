@@ -69,6 +69,8 @@ function execute() {
                         // this is where the bernie modal is opened and closed
                         $(".mod").addClass("active");
                         $("#overlay").addClass("active");
+                        $(".title").text("No articles were found for this Rep.");
+                        $(".title").attr("style", "margin-left: 10px");
                         $(".close-button").on("click", function() {
                         $(".mod").removeClass("active");
                         $("#overlay").removeClass("active");
