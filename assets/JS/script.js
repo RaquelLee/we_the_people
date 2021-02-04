@@ -17,7 +17,7 @@ $("#submit-state").on("click", function (event) {
     $(".collection-item").empty();
     $(".reps").empty();
     $(".names").empty();
-    
+
 });
 
 $("#history-state").on("click", function (event) {
@@ -32,7 +32,7 @@ function execute() {
     })
         .then(function (response) {
             // $(".names").empty();
-            $(".display-news").empty();        
+            $(".display-news").empty();
             $("#history-state").addClass("hide");
             $(".about").addClass("hide");
             $(".cursive").removeClass("front-page");
@@ -71,17 +71,17 @@ function execute() {
                         $("#overlay").addClass("open");
                         $(".title").text("No articles were found for this Rep.");
                         $(".title").attr("style", "margin-left: 10px");
-                        $(".close-button").on("click", function() {
-                        $(".mod").removeClass("open");
-                        $("#overlay").removeClass("open");
+                        $(".close-button").on("click", function () {
+                            $(".mod").removeClass("open");
+                            $("#overlay").removeClass("open");
                         });
-                        $(document).on("click", function() {
+                        $(document).on("click", function () {
                             $(".mod").removeClass("open");
                             $("#overlay").removeClass("open");
                         });
                     };
                     for (var j = 0; j < response.value.length; j++) {
-                        if (response.value[j] && response.value[j].image) {
+                        if (response.value[j]) {
                             var colDiv = $("<div>");
                             colDiv.addClass("col s6");
                             $(".display-news").append(colDiv);
@@ -90,20 +90,22 @@ function execute() {
                             cardDiv.addClass("card card-panel hoverable large");
                             $(colDiv).append(cardDiv);
 
-                            var newImg = $("<img>");
-                            newImg.addClass("circle responsive-img");
-                            newImg.attr("src", response.value[j].image.thumbnail.contentUrl);
-                            cardDiv.append(newImg);
+                            if (response.value[j].image) {
+                                var newImg = $("<img>");
+                                newImg.addClass("circle responsive-img");
+                                newImg.attr("src", response.value[j].image.thumbnail.contentUrl);
+                                cardDiv.append(newImg);
+                            }
 
                             var newSpan = $("<span>");
                             newSpan.addClass("card-title");
-                            if (response.value[j].name.length > 112){
+                            if (response.value[j].name.length > 112) {
                                 response.value[j].name = response.value[j].name.substring(0, 111) + "...";
                             };
                             newSpan.text(response.value[j].name);
-                            cardDiv.append(newSpan); 
+                            cardDiv.append(newSpan);
 
-                            var newA = $("<a>"); 
+                            var newA = $("<a>");
                             newA.addClass("btn-floating waves-effect waves-light halfway-fab black");
                             newA.attr("href", response.value[j].url);
                             var i = $("<i>");
@@ -119,25 +121,28 @@ function execute() {
                             var newP = $("<p>");
                             newP.addClass("scroll-box");
                             newP.text(response.value[j].description);
-                            cardContentDiv.append(newP); 
+                            cardContentDiv.append(newP);
                         };
-                    }});
+
+                    }
+                });
             });
         },
-            function (err) { console.error("Execute error", err);
-            $(".collection-item").empty();
-            $(".names").empty();
-            $(".display-news").empty(); 
-            $(".mod").addClass("open");
-            $("#overlay").addClass("open");
-            $(".title").text("Entry non-recognizable. Check your spelling.")
-            $(".close-button").on("click", function() {
-            $(".mod").removeClass("open");
-            $("#overlay").removeClass("open");
+            function (err) {
+                console.error("Execute error", err);
+                $(".collection-item").empty();
+                $(".names").empty();
+                $(".display-news").empty();
+                $(".mod").addClass("open");
+                $("#overlay").addClass("open");
+                $(".title").text("Entry non-recognizable. Check your spelling.")
+                $(".close-button").on("click", function () {
+                    $(".mod").removeClass("open");
+                    $("#overlay").removeClass("open");
+                });
+                $(document).on("click", function () {
+                    $(".mod").removeClass("open");
+                    $("#overlay").removeClass("open");
+                });
             });
-            $(document).on("click", function() {
-                $(".mod").removeClass("open");
-                $("#overlay").removeClass("open");
-            });
-         });
 };
