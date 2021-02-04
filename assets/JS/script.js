@@ -1,4 +1,4 @@
-$(".collection").addClass("hide");//
+$(".collection").addClass("hide");
 
 function loadClient() {
     gapi.client.setApiKey("AIzaSyDP33wEIM1qwv7C_7NOQlaWEoaEHVOKFUg");
@@ -28,7 +28,7 @@ function execute() {
     })
         .then(function (response) {
             $(".names").empty();
-            $(".newsInfo").empty();        
+            $(".display-news").empty();        
             $("#history-state").addClass("hide");
             $(".about").addClass("hide");
             $(".cursive").removeClass("front-page");
@@ -36,7 +36,7 @@ function execute() {
             for (var i = 2; i < response.result.officials.length; i++) {
                 let repName = response.result.officials[i].name;
                 var li = $("<li>");
-                li.addClass("names");//adding collection-item for active links causes error
+                li.addClass("names");
                 li.attr("data-rep", repName);
                 li.text(repName);
                 $(".reps").append(li);
@@ -63,8 +63,8 @@ function execute() {
                         $(".mod").addClass("active");
                         $("#overlay").addClass("active");
                         $(".close-button").on("click", function(){
-                            $(".mod").removeClass("active");
-                            $("#overlay").removeClass("active");
+                        $(".mod").removeClass("active");
+                        $("#overlay").removeClass("active");
                         })
                         $(document).on("click", function(){
                             $(".mod").removeClass("active");
@@ -72,8 +72,6 @@ function execute() {
                         })
                     }
                     for (var j = 0; j < response.value.length; j++) {
-                        var newP = $("<p>");
-                        newP.addClass("newsInfo");
                         if (response.value[j] && response.value[j].image) {
                             var colDiv = $("<div>");
                             colDiv.addClass("col s6")
@@ -111,7 +109,7 @@ function execute() {
                             cardDiv.append(cardContentDiv);
 
                             var newP = $("<p>");
-                            newP.addClass("newsInfo scroll-box");
+                            newP.addClass("scroll-box");
                             newP.text(response.value[j].description);
                             cardContentDiv.append(newP); 
                         };
