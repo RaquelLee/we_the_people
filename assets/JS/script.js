@@ -14,6 +14,10 @@ $("#submit-state").on("click", function (event) {
     userState = $("#state-input").val();
     localStorage.setItem("State", userState);
     execute(userState);
+    $(".collection-item").empty();
+    $(".reps").empty();
+    $(".names").empty();
+    
 });
 
 $("#history-state").on("click", function (event) {
@@ -118,5 +122,20 @@ function execute() {
                     }});
             });
         },
-            function (err) { console.error("Execute error", err); });
+            function (err) { console.error("Execute error", err);
+            $(".collection-item").empty();
+            $(".names").empty();
+            $(".display-news").empty(); 
+            $(".mod").addClass("active");
+            $("#overlay").addClass("active");
+            $(".title").text("Entry non-recognizable. Check your spelling.")
+            $(".close-button").on("click", function() {
+            $(".mod").removeClass("active");
+            $("#overlay").removeClass("active");
+            });
+            $(document).on("click", function() {
+                $(".mod").removeClass("active");
+                $("#overlay").removeClass("active");
+            });
+         });
 };
