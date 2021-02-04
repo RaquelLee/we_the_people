@@ -31,7 +31,7 @@ function execute() {
         "address": userState
     })
         .then(function (response) {
-            $(".names").empty();
+            // $(".names").empty();
             $(".display-news").empty();        
             $("#history-state").addClass("hide");
             $(".about").addClass("hide");
@@ -67,17 +67,17 @@ function execute() {
                 $.ajax(settings).done(function (response) {
                     if (response.value.length <= 0) {
                         // this is where the bernie modal is opened and closed
-                        $(".mod").addClass("active");
-                        $("#overlay").addClass("active");
+                        $(".mod").addClass("open");
+                        $("#overlay").addClass("open");
                         $(".title").text("No articles were found for this Rep.");
                         $(".title").attr("style", "margin-left: 10px");
                         $(".close-button").on("click", function() {
-                        $(".mod").removeClass("active");
-                        $("#overlay").removeClass("active");
+                        $(".mod").removeClass("open");
+                        $("#overlay").removeClass("open");
                         });
                         $(document).on("click", function() {
-                            $(".mod").removeClass("active");
-                            $("#overlay").removeClass("active");
+                            $(".mod").removeClass("open");
+                            $("#overlay").removeClass("open");
                         });
                     };
                     for (var j = 0; j < response.value.length; j++) {
@@ -128,16 +128,16 @@ function execute() {
             $(".collection-item").empty();
             $(".names").empty();
             $(".display-news").empty(); 
-            $(".mod").addClass("active");
-            $("#overlay").addClass("active");
+            $(".mod").addClass("open");
+            $("#overlay").addClass("open");
             $(".title").text("Entry non-recognizable. Check your spelling.")
             $(".close-button").on("click", function() {
-            $(".mod").removeClass("active");
-            $("#overlay").removeClass("active");
+            $(".mod").removeClass("open");
+            $("#overlay").removeClass("open");
             });
             $(document).on("click", function() {
-                $(".mod").removeClass("active");
-                $("#overlay").removeClass("active");
+                $(".mod").removeClass("open");
+                $("#overlay").removeClass("open");
             });
          });
 };
