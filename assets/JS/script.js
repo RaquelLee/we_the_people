@@ -3,8 +3,7 @@ $(".collection").addClass("hide");
 function loadClient() {
     gapi.client.setApiKey("AIzaSyDP33wEIM1qwv7C_7NOQlaWEoaEHVOKFUg");
     return gapi.client.load("https://civicinfo.googleapis.com/$discovery/rest?version=v2")
-        .then(function () { console.log("GAPI client loaded for API"); },
-            function (err) { console.error("Error loading GAPI client for API", err); });
+        .then(function (err) { console.error("Error loading GAPI client for API", err); });
 }
 gapi.load("client", loadClient);
 
@@ -17,7 +16,6 @@ $("#submit-state").on("click", function (event) {
     $(".collection-item").empty();
     $(".reps").empty();
     $(".names").empty();
-
 });
 
 $("#history-state").on("click", function (event) {
@@ -31,12 +29,13 @@ function execute() {
         "address": userState
     })
         .then(function (response) {
-            // $(".names").empty();
-            $(".display-news").empty();
-            $("#history-state").addClass("hide");
-            $(".about").addClass("hide");
+            // Dynamically change page
             $(".cursive").removeClass("front-page");
+            $(".about").addClass("hide");
+            $("#history-state").addClass("hide");
             $(".collection").removeClass("hide");
+            $(".display-news").empty();
+            // Rep name list
             for (var i = 2; i < response.result.officials.length; i++) {
                 let repName = response.result.officials[i].name;
                 var li = $("<li>");
@@ -45,12 +44,13 @@ function execute() {
                 li.text(repName);
                 $(".reps").append(li);
             };
+            // Active rep 
             $(".names").on("click", function () {
-                // removing class for styling
                 $(".collection-item").removeClass("active");
                 $(".display-news").empty()
                 let currentRep = $(this).attr("data-rep");
                 $(this).addClass("active");
+                // News API
                 const settings = {
                     "async": true,
                     "crossDomain": true,
@@ -65,8 +65,8 @@ function execute() {
                     }
                 };
                 $.ajax(settings).done(function (response) {
+                    // Bernie Modal
                     if (response.value.length <= 0) {
-                        // this is where the bernie modal is opened and closed
                         $(".mod").addClass("open");
                         $("#overlay").addClass("open");
                         $(".title").text("No articles were found for this Rep.");
@@ -80,6 +80,7 @@ function execute() {
                             $("#overlay").removeClass("open");
                         });
                     };
+                    // News Display
                     for (var j = 0; j < response.value.length; j++) {
                         if (response.value[j]) {
                             var colDiv = $("<div>");
@@ -124,18 +125,19 @@ function execute() {
                             cardContentDiv.append(newP);
                         };
 
-                    }
+                    };
                 });
             });
         },
             function (err) {
+                // Modal for user input empty/unrecognized
                 console.error("Execute error", err);
                 $(".collection-item").empty();
                 $(".names").empty();
                 $(".display-news").empty();
                 $(".mod").addClass("open");
                 $("#overlay").addClass("open");
-                $(".title").text("Entry non-recognizable. Check your spelling.")
+                $(".title").text("Entry non-recognizable. Check your spelling.");
                 $(".close-button").on("click", function () {
                     $(".mod").removeClass("open");
                     $("#overlay").removeClass("open");
