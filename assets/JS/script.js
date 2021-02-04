@@ -107,6 +107,7 @@ function execute() {
 
                             var newA = $("<a>");
                             newA.addClass("btn-floating waves-effect waves-light halfway-fab black");
+                            newA.attr("target","_blank");
                             newA.attr("href", response.value[j].url);
                             var i = $("<i>");
                             i.addClass("material-icons");

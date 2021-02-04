@@ -116,8 +116,13 @@
     opacity: 1 !important;
 }
 
-textarea.materialize-textarea:focus:not([readonly])+label {
+ textarea.materialize-textarea:focus:not([readonly])+label {
     color:black !important;
+} 
+
+textarea.materialize-textarea:focus:not([readonly]) {
+    border-bottom: .5px black !important;
+    box-shadow: 0 1px 0 0  black !important;
 }
 
 textarea.materialize-textarea {
