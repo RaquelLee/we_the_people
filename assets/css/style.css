@@ -110,6 +110,11 @@
     background-color: transparent !important;
     opacity: 1 !important;
 }
+/* made items transparent as well */
+.collection-item {
+    background-color: transparent !important;
+    opacity: 1 !important;
+}
 
 textarea.materialize-textarea:focus:not([readonly])+label {
     color:black !important;

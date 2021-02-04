@@ -42,8 +42,11 @@ function execute() {
                 $(".reps").append(li);
             };
             $(".names").on("click", function () {
-                $(".display-news").empty();
+                // removing class for styling
+                $(".collection-item").removeClass("active");
+                $(".display-news").empty()
                 let currentRep = $(this).attr("data-rep");
+                $(this).addClass("active");
                 const settings = {
                     "async": true,
                     "crossDomain": true,
