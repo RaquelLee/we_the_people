@@ -36,7 +36,7 @@ function execute() {
             for (var i = 2; i < response.result.officials.length; i++) {
                 let repName = response.result.officials[i].name;
                 var li = $("<li>");
-                li.addClass("names");
+                li.addClass("names collection-item");
                 li.attr("data-rep", repName);
                 li.text(repName);
                 $(".reps").append(li);
