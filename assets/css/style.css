@@ -1,5 +1,6 @@
 .cursive {
     font-family: 'Pinyon Script', cursive;
+    text-align: center;
 }
 
 .front-page {
@@ -72,7 +73,6 @@
 }
 .about {
     text-align: center;
-    margin-left: 200px;
 }
 .modal-header .title {
     font-size: 1.25rem;
@@ -109,4 +109,16 @@
 .collection-header {
     background-color: transparent !important;
     opacity: 1 !important;
+}
+
+textarea.materialize-textarea:focus:not([readonly])+label {
+    color:black !important;
+}
+
+textarea.materialize-textarea {
+    border-bottom: 1px solid grey !important;
+}
+
+.input-field{
+    display: flex;
 }

@@ -1,4 +1,4 @@
-$(".collection").addClass("hide");//
+$(".collection").addClass("hide");
 
 function loadClient() {
     gapi.client.setApiKey("AIzaSyDP33wEIM1qwv7C_7NOQlaWEoaEHVOKFUg");
@@ -28,7 +28,7 @@ function execute() {
     })
         .then(function (response) {
             $(".names").empty();
-            $(".newsInfo").empty();        
+            $(".display-news").empty();        
             $("#history-state").addClass("hide");
             $(".about").addClass("hide");
             $(".cursive").removeClass("front-page");
@@ -36,14 +36,14 @@ function execute() {
             for (var i = 2; i < response.result.officials.length; i++) {
                 let repName = response.result.officials[i].name;
                 var li = $("<li>");
-                li.addClass("names");//adding collection-item for active links causes error
+                li.addClass("names collection-item");
                 li.attr("data-rep", repName);
                 li.text(repName);
                 $(".reps").append(li);
             };
             $(".names").on("click", function () {
                 $(".display-news").empty();
-                let currentRep = $(this).attr("data-rep")
+                let currentRep = $(this).attr("data-rep");
                 const settings = {
                     "async": true,
                     "crossDomain": true,
@@ -62,21 +62,19 @@ function execute() {
                         // this is where the bernie modal is opened and closed
                         $(".mod").addClass("active");
                         $("#overlay").addClass("active");
-                        $(".close-button").on("click", function(){
+                        $(".close-button").on("click", function() {
+                        $(".mod").removeClass("active");
+                        $("#overlay").removeClass("active");
+                        });
+                        $(document).on("click", function() {
                             $(".mod").removeClass("active");
                             $("#overlay").removeClass("active");
-                        })
-                        $(document).on("click", function(){
-                            $(".mod").removeClass("active");
-                            $("#overlay").removeClass("active");
-                        })
-                    }
+                        });
+                    };
                     for (var j = 0; j < response.value.length; j++) {
-                        var newP = $("<p>");
-                        newP.addClass("newsInfo");
                         if (response.value[j] && response.value[j].image) {
                             var colDiv = $("<div>");
-                            colDiv.addClass("col s6")
+                            colDiv.addClass("col s6");
                             $(".display-news").append(colDiv);
 
                             var cardDiv = $("<div>");
@@ -85,7 +83,6 @@ function execute() {
 
                             var newImg = $("<img>");
                             newImg.addClass("circle responsive-img");
-
                             newImg.attr("src", response.value[j].image.thumbnail.contentUrl);
                             cardDiv.append(newImg);
 
@@ -111,46 +108,10 @@ function execute() {
                             cardDiv.append(cardContentDiv);
 
                             var newP = $("<p>");
-                            newP.addClass("newsInfo scroll-box");
+                            newP.addClass("scroll-box");
                             newP.text(response.value[j].description);
                             cardContentDiv.append(newP); 
                         };
-                        // SHOW ARTICLES WITH NO IMAGE?
-                        // } else if (response.value[j]) {
-                        //     var colDiv = $("<div>");
-                        //     colDiv.addClass("col s6 ")
-                        //     $(".display-news").append(colDiv);
-
-                        //     var cardDiv = $("<div>");
-                        //     cardDiv.addClass("card card-panel hoverable large");
-                        //     $(colDiv).append(cardDiv);
-
-                        //     var newSpan = $("<span>");
-                        //     newSpan.addClass("card-title");
-                        //     if (response.value[j].name.length > 112){
-                        //         response.value[j].name = response.value[j].name.substring(0, 111) + "...";
-                        //     };
-                        //     newSpan.text(response.value[j].name);
-                        //     cardDiv.append(newSpan); 
-
-                        //     var newA = $("<a>"); 
-                        //     newA.addClass("btn-floating waves-effect waves-light halfway-fab grey");
-                        //     newA.attr("href", response.value[j].url);
-                        //     var i = $("<i>");
-                        //     i.addClass("material-icons tiny");
-                        //     i.text("open_in_new");
-                        //     newA.append(i);
-                        //     cardDiv.prepend(newA);
-
-                        //     var cardContentDiv = $("<div>");
-                        //     cardContentDiv.addClass("card-content scroll-box");
-                        //     cardDiv.append(cardContentDiv);
-
-                        //     var newP = $("<p>");
-                        //     newP.addClass("newsInfo scroll-box");
-                        //     newP.text(response.value[j].description);
-                        //     cardContentDiv.append(newP);
-                        // };
                     }});
             });
         },
