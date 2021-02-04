@@ -127,3 +127,7 @@ textarea.materialize-textarea {
 .input-field{
     display: flex;
 }
+
+.collection-item.active {
+    background-color:rgb(0, 0, 0, .5) !important;
+}
