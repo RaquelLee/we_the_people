@@ -1,10 +1,16 @@
 $(".collection").addClass("hide");
+$(".no-news").addClass("hide");
 
 function loadClient() {
     gapi.client.setApiKey("AIzaSyDP33wEIM1qwv7C_7NOQlaWEoaEHVOKFUg");
     return gapi.client.load("https://civicinfo.googleapis.com/$discovery/rest?version=v2")
-        .then(function (err) { console.error("Error loading GAPI client for API", err); });
-}
+        .then(function () {
+            console.log("GAPI client loaded for API");
+        },
+        function (err) { 
+        console.error("Error loading GAPI client for API", err); 
+        });
+};
 gapi.load("client", loadClient);
 
 let userState = "";
@@ -13,9 +19,8 @@ $("#submit-state").on("click", function (event) {
     userState = $("#state-input").val();
     localStorage.setItem("State", userState);
     execute(userState);
-    $(".collection-item").empty();
+    clearSideBar();
     $(".reps").empty();
-    $(".names").empty();
 });
 
 $("#history-state").on("click", function (event) {
@@ -29,12 +34,8 @@ function execute() {
         "address": userState
     })
         .then(function (response) {
-            // Dynamically change page
-            $(".cursive").removeClass("front-page");
-            $(".about").addClass("hide");
-            $("#history-state").addClass("hide");
-            $(".collection").removeClass("hide");
-            $(".display-news").empty();
+            searchPageStyle();
+
             // Rep name list
             for (var i = 2; i < response.result.officials.length; i++) {
                 let repName = response.result.officials[i].name;
@@ -44,19 +45,21 @@ function execute() {
                 li.text(repName);
                 $(".reps").append(li);
             };
+
             // Active rep 
             $(".names").on("click", function () {
                 $(".collection-item").removeClass("active");
                 $(".display-news").empty()
                 let currentRep = $(this).attr("data-rep");
                 $(this).addClass("active");
+
                 // News API
                 const settings = {
                     "async": true,
                     "crossDomain": true,
                     "url": "https://bing-news-search1.p.rapidapi.com/news/search?q="
-                        + currentRep +
-                        "&freshness=Day&textFormat=Raw&safeSearch=Off",
+                    + currentRep +
+                    "&freshness=Day&textFormat=Raw&safeSearch=Off",
                     "method": "GET",
                     "headers": {
                         "x-bingapis-sdk": "true",
@@ -65,21 +68,21 @@ function execute() {
                     }
                 };
                 $.ajax(settings).done(function (response) {
+                    $(".no-news").addClass("hide");
+
                     // Bernie Modal
                     if (response.value.length <= 0) {
-                        $(".mod").addClass("open");
-                        $("#overlay").addClass("open");
+                        openModal();
                         $(".title").text("No articles were found for this Rep.");
                         $(".title").attr("style", "margin-left: 10px");
                         $(".close-button").on("click", function () {
-                            $(".mod").removeClass("open");
-                            $("#overlay").removeClass("open");
+                            closeModal();                        
                         });
                         $(document).on("click", function () {
-                            $(".mod").removeClass("open");
-                            $("#overlay").removeClass("open");
+                            closeModal();
                         });
                     };
+
                     // News Display
                     for (var j = 0; j < response.value.length; j++) {
                         if (response.value[j]) {
@@ -96,7 +99,7 @@ function execute() {
                                 newImg.addClass("circle responsive-img");
                                 newImg.attr("src", response.value[j].image.thumbnail.contentUrl);
                                 cardDiv.append(newImg);
-                            }
+                            };
 
                             var newSpan = $("<span>");
                             newSpan.addClass("card-title");
@@ -125,7 +128,6 @@ function execute() {
                             newP.text(response.value[j].description);
                             cardContentDiv.append(newP);
                         };
-
                     };
                 });
             });
@@ -133,19 +135,40 @@ function execute() {
             function (err) {
                 // Modal for user input empty/unrecognized
                 console.error("Execute error", err);
-                $(".collection-item").empty();
-                $(".names").empty();
+                clearSideBar();
                 $(".display-news").empty();
-                $(".mod").addClass("open");
-                $("#overlay").addClass("open");
+                openModal();
                 $(".title").text("Entry non-recognizable. Check your spelling.");
                 $(".close-button").on("click", function () {
-                    $(".mod").removeClass("open");
-                    $("#overlay").removeClass("open");
+                    closeModal();
                 });
                 $(document).on("click", function () {
-                    $(".mod").removeClass("open");
-                    $("#overlay").removeClass("open");
+                    closeModal();
                 });
             });
+};
+
+//funcs for repetitive/unnecissarily nested code
+function searchPageStyle () {
+    $(".no-news").removeClass("hide");
+    $(".cursive").removeClass("front-page");
+    $(".about").addClass("hide");
+    $("#history-state").addClass("hide");
+    $(".collection").removeClass("hide");
+    $(".display-news").empty();
+};
+
+function clearSideBar () {
+    $(".collection-item").empty();
+    $(".names").empty();
+};
+
+function openModal () {
+    $(".mod").addClass("open");
+    $("#overlay").addClass("open");
+};
+
+function closeModal () {
+    $(".mod").removeClass("open");
+    $("#overlay").removeClass("open");
 };
