@@ -1,4 +1,5 @@
 $(".collection").addClass("hide");
+$(".no-news").addClass("hide");
 
 function loadClient() {
     gapi.client.setApiKey("AIzaSyDP33wEIM1qwv7C_7NOQlaWEoaEHVOKFUg");
@@ -65,6 +66,8 @@ function execute() {
                     }
                 };
                 $.ajax(settings).done(function (response) {
+                    $(".no-news").addClass("hide");
+
                     // Bernie Modal
                     if (response.value.length <= 0) {
                         $(".mod").addClass("open");
