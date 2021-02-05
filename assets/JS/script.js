@@ -107,6 +107,7 @@ function execute() {
                             cardDiv.append(newSpan);
 
                             var newA = $("<a>");
+                            newA.attr("target","_blank");
                             newA.addClass("btn-floating waves-effect waves-light halfway-fab black");
                             newA.attr("href", response.value[j].url);
                             var i = $("<i>");
