@@ -5,11 +5,11 @@ function loadClient() {
     gapi.client.setApiKey("AIzaSyDP33wEIM1qwv7C_7NOQlaWEoaEHVOKFUg");
     return gapi.client.load("https://civicinfo.googleapis.com/$discovery/rest?version=v2")
         .then(function () {
-        console.log("GAPI client loaded for API");
-    },
-    function (err) { 
+            console.log("GAPI client loaded for API");
+        },
+        function (err) { 
         console.error("Error loading GAPI client for API", err); 
-    });
+        });
 };
 gapi.load("client", loadClient);
 
