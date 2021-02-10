@@ -50,8 +50,11 @@
 }
 
 #bernie {
-    margin-left: 35%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 10px;
+    margin-bottom: 10px;
     border-radius: 10px;
 }
 
@@ -84,8 +87,10 @@
 }
 
 /* Header font size */
-.front-page {
-    font-size: 180px;
+@media only screen and (min-width: 768px) {
+    .front-page {
+        font-size: 180px;
+    }
 }
 
 /* Inline form */
@@ -120,26 +125,4 @@ textarea.materialize-textarea {
 
 .collection-item.active {
     background-color:rgb(0, 0, 0, .5) !important;
-}
-
-/* Scroll to prevent text overflow on cards */
-.scroll-box {
-    overflow-y: scroll;
-    height: 200px;
-}
-
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-::-webkit-scrollbar-track {
-    background: #ffffff;
-}       
-
-::-webkit-scrollbar-thumb {
-    background: rgb(255, 255, 255);
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: rgb(0, 0, 0);
 }
