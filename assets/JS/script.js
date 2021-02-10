@@ -87,11 +87,11 @@ function execute() {
                     for (var j = 0; j < response.value.length; j++) {
                         if (response.value[j]) {
                             var colDiv = $("<div>");
-                            colDiv.addClass("col s6");
+                            colDiv.addClass("col s12");
                             $(".display-news").append(colDiv);
 
                             var cardDiv = $("<div>");
-                            cardDiv.addClass("card card-panel hoverable large");
+                            cardDiv.addClass("card card-panel hoverable");
                             $(colDiv).append(cardDiv);
 
                             if (response.value[j].image) {
@@ -103,9 +103,6 @@ function execute() {
 
                             var newSpan = $("<span>");
                             newSpan.addClass("card-title");
-                            if (response.value[j].name.length > 112) {
-                                response.value[j].name = response.value[j].name.substring(0, 111) + "...";
-                            };
                             newSpan.text(response.value[j].name);
                             cardDiv.append(newSpan);
 
@@ -124,7 +121,6 @@ function execute() {
                             cardDiv.append(cardContentDiv);
 
                             var newP = $("<p>");
-                            newP.addClass("scroll-box");
                             newP.text(response.value[j].description);
                             cardContentDiv.append(newP);
                         };
